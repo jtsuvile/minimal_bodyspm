@@ -98,7 +98,7 @@ def combine_data(dataloc, subnums, groups=None, save=False, noImages = False):
     stimuli are located in this folder
     :param subnums: which subjects to combine (list). Assumes one .json file per subject
     :param groups: list of group definitions to be included, must be same length and in same order as subnums
-    :param save: do you want the combined data set saved into file (pickled)? (Boolean)
+    :param save: do you want the combined data set saved into file (hdf5)? (Boolean)
     :param noImages: do you want to just combine background data? (useful for extremely large data sets)
     :return: combined data for the defined subjects.
     The data are stored in a dictionary, where each body map will be presented as N * X * Y numpy array,
@@ -205,6 +205,7 @@ def binarize(data, threshold=0.007):
     data[data < -threshold] = -1
     return data
 
+
 def count_pixels(data, mask=None):
     """
     Count the number and proportion of coloured pixels per subject
@@ -225,6 +226,7 @@ def count_pixels(data, mask=None):
         counts_vector = np.sum(inside_mask, axis=1)
     prop_vector = [x / n_pixels for x in counts_vector]
     return counts_vector, prop_vector
+
 
 def count_pixels_posneg(data, mask=None, threshold=0.007):
     """
@@ -338,7 +340,7 @@ def get_latest_datafile(datadir):
     """
     latestfile = ''
     for file in os.listdir(datadir):
-        if file.startswith("dataset"):
+        if file.startswith("dataset_"):
             if latestfile == '' or os.path.getmtime(datadir +  '/' + file) > os.path.getmtime(datadir + '/' + latestfile):
                 latestfile = file
             dataloc = os.path.join(datadir, latestfile)

@@ -25,7 +25,7 @@ class Stimuli:
                       "or vector with same length as stimulus names")
                 return
             for i, name in enumerate(names):
-                self.all[name] = {'onesided': new_onesided[i]}
+                self.all[name] = {'onesided': bool(new_onesided[i])}
                 if show_names and show_names[i]:
                     self.all[name]['show_name'] = show_names[i]
                     self.has_show_names = True
